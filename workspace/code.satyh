@@ -1,0 +1,17 @@
+@stage: 1
+
+@import: meta
+
+let-rec pow b e = match e with
+        | 0 -> 1
+        | 1 -> b
+        | n -> let v = pow b (n / 2) in
+        let v2 = v * v in
+            if n mod 2 == 1
+            then
+                b * v2
+            else
+                v2
+let-inline \pow b e = embed-string (arabic (pow b e))
+let-inline \genpow b = embed-string (arabic (~(genpow 16) b))
+let-inline \show-int n = embed-string (arabic n)

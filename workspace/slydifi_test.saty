@@ -1,0 +1,107 @@
+@require: class-slydifi/theme/arctic
+@require: figbox/figbox
+@require: enumitem/enumitem
+@require: code-printer/code-printer
+@require: code-printer/code-syntax
+@require: code-printer/code-theme
+@require: fss/fss
+@require: fss/fonts
+@require: fss/style
+@import: code
+@import: meta
+
+open FigBox
+in
+
+document'<
+    +set-config (let hackgen = (`system:HackGen35ConsoleNFJ-Regular`, 1., 0.) in
+    let hackgenbold = (`system:HackGen35ConsoleNFJ-Bold`, 1., 0.) in
+    let set-font-all f =
+        [
+            set-font Latin f;
+            set-font HanIdeographic f;
+            set-font Kana f;
+            set-font OtherScript f;
+        ] in
+    let text-color = Color.rgb 0.1372 0.18 0.2313 in
+    let set-hackgen = SlydifiScheme.apply-font-cfg (set-font-all hackgen) in
+    let set-hackgenbold = SlydifiScheme.apply-font-cfg (set-font-all hackgenbold) in
+        (|
+            SlydifiThemeArctic.default-config with %%
+
+            font-normal = set-hackgen;
+            font-bold = set-hackgenbold;
+            font-code = set-hackgen;
+            font-slide-title = SlydifiScheme.apply-font-cfg ((set-font-size 32pt) :: (set-font-all hackgenbold));
+            font-slide-author = set-hackgen;
+            font-slide-date = set-hackgen;
+            font-section-title = SlydifiScheme.apply-font-cfg ((set-font-size 32pt) :: (set-font-all hackgenbold));
+            font-frame-title = SlydifiScheme.apply-font-cfg ((set-font-size 28pt) :: (set-font-all hackgenbold));
+            font-pagenum = set-hackgen;
+            font-footnote = set-hackgen;
+            font-quote = set-hackgen;
+            %% color
+
+            color-bg = Color.white;
+            color-fg = text-color;
+            color-emph = text-color;
+            color-weak = text-color;
+            % frame template
+
+            color-bg-slide-author = Color.of-css `#394b61`;
+            color-fg-section-title = text-color;
+            color-fg-section-mirror = Color.white;
+            color-bg-section-mirror = Color.white;
+            color-separator = Color.gray 0.7;
+            color-pagenum = text-color;
+            color-indicator-total = Color.gray 0.7;
+            color-indicator-done = Color.yellow;
+            %% length
+
+            length-frame-title-height = 32pt;
+            length-frame-title-bot-margin = 14pt;
+        |));
+    +make-title ((|
+        title = {
+        |\SLyDIFi; デモ用スライド
+        |【複数行書くこともできるよ】
+        |
+        };
+        author = { |monaqa| };
+        date = { |2021年12月17日| };
+    |));
+
+    +section { |section| } <>
+    +frame { 基本的なフレーム } <
+        +p {
+            `+p{}` コマンドを使うと\emph { 段落 }を記述できる。
+            `+listing{}` コマンドを使うと\text-color (Color.red) { 箇条書き }を記述できる。
+        }
+        +listing {
+            * マークアップ用のインラインコマンドをデフォルトで提供
+              ** バッククォートで囲まれた箇所は自動的にコードとして扱われる
+              ** `\emph{text}` でテキストを強調できる
+              ** `\text-color(color){text}` でテキストの表示色を変更できる
+            * その他にも様々なコマンドがある（テーマによって実装されているコマンドは異なる）
+        }
+    >
+
+    +frame { code } <
+        +font-style [
+            font-size 12pt;
+        ] <
+            +code-printer ?:(CodePrinter.make-config CodeSyntax.ocaml CodeTheme.light-owl) (%
+            `let x = 0 in x * x;;`);
+            +p { \| }
+        >
+    >
+
+    +frame { use program \| } <
+        +font-style [
+            font-size 12pt;
+        ] <
+            +p { \pow (2) (3); }
+            +p { \show-int (~(genpow (3)) (2)); }
+        >
+    >
+>

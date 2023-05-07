@@ -1,0 +1,12 @@
+@stage: 0
+
+let-rec genpow e = let-rec aux n x = match n with
+            | 0 -> &1
+            | 1 -> &(~x)
+            | n -> &(let v = ~(aux (n / 2) x) in
+            let v2 = v * v in
+                ~(if n mod 2 == 1
+                then
+                    &(~x * v2)
+                else
+                    &(v2))) in &(fun x -> ~(aux e &x))

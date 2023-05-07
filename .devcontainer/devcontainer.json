@@ -1,0 +1,25 @@
+{
+    "name": "${localWorkspaceFolderBasename}",
+    "image": "ghcr.io/maemon4095/satysfi:latest",
+    "runArgs": [
+        "--workdir",
+        "/${localWorkspaceFolderBasename}/workspace",
+        "--tty",
+        "--name",
+        "${localWorkspaceFolderBasename}"
+    ],
+    "mounts": [],
+    "workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+    "workspaceFolder": "/${localWorkspaceFolderBasename}/workspace",
+    "forwardPorts": [
+        8080
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "pickoba.satysfi-workshop",
+                "tomoki1207.pdf"
+            ]
+        }
+    }
+}
