@@ -3,14 +3,14 @@
     "image": "ghcr.io/maemon4095/satysfi:latest",
     "runArgs": [
         "--workdir",
-        "/${localWorkspaceFolderBasename}/workspace",
+        "/${localWorkspaceFolderBasename}",
         "--tty",
         "--name",
         "${localWorkspaceFolderBasename}"
     ],
     "mounts": [],
     "workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind,consistency=cached",
-    "workspaceFolder": "/${localWorkspaceFolderBasename}/workspace",
+    "workspaceFolder": "/${localWorkspaceFolderBasename}",
     "forwardPorts": [
         8080
     ],
